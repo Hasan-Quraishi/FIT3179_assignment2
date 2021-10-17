@@ -1,0 +1,45 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {"text":"Number of casualties over years for male and female","fontSize":20},
+    "data": {"url": "final_clean.csv"},
+    "width": {"step": 17},
+    "mark": "bar",
+    "params": [
+      {
+      "name": "Start_Year",
+      "value": 0,
+      "bind": {
+      "name": "Start Year: ",
+      "input": "range",
+      "min": 1989,
+      "max": 2020,
+      "step": 1
+      }
+      }],
+      "transform": [
+          {"filter": "datum.Year> Start_Year"}
+          
+          ],
+
+    "encoding": {
+      "y": {"aggregate": "sum", "field": "Number Fatalities", "title": "Casualties","axis": {"grid": false, "tickBand": "extent",
+        "titleFontSize":18,
+        "labelFontSize":14
+      }},
+      "x": {"field": "Year","axis": {
+        "labelAngle": -60,
+        "titleFontSize":18,
+        "labelFontSize":14
+      }},
+      "color": {"field": "Gender", "scale": {"range": ["#fdcdac", "#ca8861","#ef3b2c"]}},
+      "tooltip": [
+        {"field": "Gender", "type": "nominal"},
+        {"aggregate": "sum", "field": "Number Fatalities","format":".1s"}
+      ]
+    },
+    "config": {
+         "background":"#FFFDD0",
+         "legend": {"labelFontSize":18,"titleFontSize":16}
+    }
+    
+  }

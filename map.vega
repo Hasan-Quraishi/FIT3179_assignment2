@@ -1,0 +1,53 @@
+{
+ "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+ "width": "container",
+ "height": 510,
+ "title": {"text":"Total number of road casualties at different states","fontSize":20},
+ "projection": {"type": "equirectangular","center":[300,-25]},
+ "layer":[ 
+     {"data": {
+    "url":"AUS_adm2.txt",
+    "format": {"type": "topojson", "feature": "AUS_adm2"}
+    },
+    "transform": [
+        {
+            "lookup": "properties.NAME_1",
+            "from":{
+               "data":{
+                   "url": "state.csv"
+               },
+               "key": "state",
+               "fields": ["casualties"]
+            }
+        }
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+        
+   
+        "color":{
+           "title": "road casualties",
+            "field":"casualties",
+            "type": "quantitative",
+            "scale": {
+               "type": "threshold",
+               "domain": [3450,5000, 6450, 9450,12450,15450],
+               "range": ["#fee5d9","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#99000d"]
+            },
+            "legend": {"format": ".1s"}
+        
+        },"tooltip": [
+           {"field": "properties.NAME_1", "type": "nominal", "title": "State"},
+           {"field": "casualties", "type": "quantitative","format":".1s"}
+           ]
+       }
+    }
+    
+    ],
+    "config": {
+           "background":"#FFFDD0",
+           "legend": {"labelFontSize":16,"titleFontSize":16}
+    }
+ 
+    
+}

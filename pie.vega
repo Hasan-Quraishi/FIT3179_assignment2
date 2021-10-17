@@ -1,0 +1,31 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 400,
+    "title":{"text":"Casualties over time on wekdays and weekends","fontSize":20},
+    "description": "A horizontal box plot showing median, min, and max body mass of penguins.",
+    "data": {"url": "final_clean.csv"},
+    "encoding": {
+      "theta": {"aggregate":"sum","field": "Number Fatalities","stack":true},
+      "color": {"field": "Day_Time", "type": "nominal","legend":null,"scale": {"range": ["brown", "#1f78b4","#003f5c","#fb9a99","#a6cee3"]}},
+      "tooltip": [
+        {"field": "Day_Time", "type": "nominal"},
+        {"aggregate": "sum", "field": "Number Fatalities","format":".1s"}
+      ]
+    },
+    "layer": [{
+        "mark": {"type": "arc", "outerRadius": 80}
+      }, {
+        "mark": {"type": "text", "radius": 130,"fontSize":18},
+        "encoding": {
+          "text": {"field": "Day_Time", "type": "nominal"}
+        }
+      }],
+      "config": {
+               "background":"#FFFDD0",
+               "view": {
+                "stroke": "transparent"
+             }
+      }
+    
+  }

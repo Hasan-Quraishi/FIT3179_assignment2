@@ -1,0 +1,64 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 500,
+    "title": {"text":"Sum of road fatalities over the year for different speed range","fontSize":20},
+    "data": {"url": "final_clean.csv"},
+    "params": [
+        {
+        "name": "Year",
+        "value": 0,
+        "bind": {
+        "input": "range",
+        "min": 1989,
+        "max": 2020,
+        "step": 1
+        }
+        }],
+        "transform": [
+            {"filter": "datum.Year> Year"}
+            
+            ],
+
+    
+    "encoding": {
+      "x": {
+        "field":"Year",
+        "axis": {
+          "titleFontSize":18,
+          "labelAngle": -60,
+          "labelFontSize":14
+        }
+      },
+      "y": {
+        "aggregate": "sum", "field": "Number Fatalities",
+        "axis": {
+          "titleFontSize":18,
+          "labelFontSize":14
+        }
+      }
+      
+    },
+    "layer":[{
+      "mark": "area",
+      "encoding": {"color": {"field": "Speed Group", "scale": {"range": ["#ff6361", "#1f78b4","#003f5c","#fb9a99","#a6cee3"]}}
+      ,
+      "tooltip": [
+        {"field": "Speed Group", "type": "ordinal", "title": "Speed Group"},
+        {"aggregate": "sum", "field": "Number Fatalities","format":".1s"}
+    ]}
+    },
+    {
+      "mark":{"type": "text","dx":35},
+      "transform": [{"filter": "datum.Year == 1989"},{"calculate":"'Peak value is 5064'","as": "text"}],
+      "encoding": {"text":{"field": "text"}}
+      
+    }
+
+    ],
+    "config": {
+          "background":"#FFFDD0",
+           "legend": {"labelFontSize":16,"titleFontSize":16}
+    }
+    
+  }

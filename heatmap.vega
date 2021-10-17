@@ -1,0 +1,97 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 400,
+    "data": {
+        "url": "final_clean.csv"
+    },
+    "title": {"text":{"expr":"'Casualties on different days of the week from '+Start_Year+' to '+ End_Year"},"fontSize":20},
+    "params": [
+        {
+        "name": "Start_Year",
+        "value": 1989,
+        "bind": {
+        "name": "Start Year: ",
+        "input": "range",
+        "min": 1989,
+        "max": 2020,
+        "step": 1
+        }
+        },{
+            "name": "End_Year",
+            "value": 2020,
+            "bind": {
+            "name": "End Year: ",
+            "input": "range",
+            "min": 1989,
+            "max": 2020,
+            "step": -1
+            }
+            }],
+        "transform": [
+            {"filter": "datum.Year>Start_Year"},
+            {"filter": "datum.Year<End_Year"}
+            
+            ],
+    "encoding": {
+        "y": {
+            "field": "State",
+            "type": "nominal",
+            "title": "State",
+            "axis": {
+                "titleFontSize":18,
+                "labelFontSize":14
+              }
+        },
+        "x": {
+            "field": "Dayweek",
+            "type": "nominal",
+            "title": "Dayweek",
+            "axis": {
+                "labelAngle": 0,
+                "titleFontSize":18,
+                "labelFontSize":14
+              }
+        }
+    
+         
+    },
+    "layer": [
+        {
+            "mark":"rect",
+            "encoding": {
+                    "color": {
+                        "field": "Number Fatalities",
+                        "aggregate": "sum",
+                        "type": "quantitative",
+                        "scale": {
+                            "type": "threshold",
+                            "domain": [0,500, 1000,1500,2000,2500,3000,3500,4000,4500],
+                            "range": ["#fff5f0","#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#cb181d","#a50f15","#67000d"]
+                         }
+                         
+                        }
+            }
+        },
+        {
+            "mark": {"type":"text","fontSize":16},
+            
+            "encoding": {
+              "text": {"field": "Number Fatalities",
+                "aggregate": "sum",
+                "type": "quantitative"},
+            "color": {
+                    "condition": {"test": "datum['sum_Number Fatalities'] < 2000", "value": "black"},
+                    "value": "white"
+                  }
+              }
+        }
+
+    ],
+    
+    "config": {
+        "axis": {"grid": true, "tickBand": "extent"},
+        "background":"#FFFDD0",
+        "legend": {"labelFontSize":16,"titleFontSize":16}
+      }
+  }
